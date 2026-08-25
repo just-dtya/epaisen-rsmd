@@ -1,0 +1,43 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+/* Source Scanning untuk Laravel Inertia + Vue */
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../views/**/*.blade.php';
+@source '../js/**/*.vue';
+@source '../js/**/*.js';
+
+/* Konfigurasi Font Global */
+@theme {
+  --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+/* Override Warna Tema Light DaisyUI */
+:root,
+[data-theme="light"] {
+  /* Teal-600 */
+  --color-primary: #0d9488 !important;
+  --color-primary-content: #ffffff !important;
+
+  /* Blue-600 */
+  --color-secondary: #2563eb !important;
+  --color-secondary-content: #ffffff !important;
+
+  /* Backward Compatibility DaisyUI */
+  --p: #0d9488 !important;
+  --pc: #ffffff !important;
+  --s: #2563eb !important;
+  --sc: #ffffff !important;
+}
+
+/* Custom Utility: Hide Scrollbar */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

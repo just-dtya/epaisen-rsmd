@@ -1,0 +1,26 @@
+{
+  "id": "/dashboard",
+  "name": "RSMD Mobile - ePasien",
+  "short_name": "RSMD Mobile",
+  "description": "Aplikasi Layanan Pasien & Informasi RSMD Soepardjo Roestam",
+  "theme_color": "#0d9488",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "orientation": "portrait",
+  "start_url": "/dashboard",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
