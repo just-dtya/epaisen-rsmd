@@ -1,10 +1,11 @@
 <script setup>
 import { ref } from 'vue'
 import { Link } from '@inertiajs/vue3'
+import LayananModal from '../components/home/LayananModal.vue'
 
 const showAllModal = ref(false)
 
-// 1. Menu Utama di Grid Beranda (Maksimal 7 menu terpopuler + 1 tombol Semua Layanan)
+// 1. Menu Utama di Grid Beranda
 const primaryMenus = [
     {
         id: 'jadwal',
@@ -58,7 +59,7 @@ const primaryMenus = [
     }
 ]
 
-// 2. Daftar Lengkap Seluruh Layanan per Kategori untuk Modal
+// 2. Daftar Lengkap Seluruh Layanan per Kategori
 const allServiceCategories = [
     {
         title: 'Pelayanan Pasien & Rawat Jalan',
@@ -181,7 +182,6 @@ const allServiceCategories = [
                             </svg>
                         </div>
 
-                        <!-- Badge Notif (contoh: Live) -->
                         <span
                             v-if="menu.badge"
                             class="absolute -top-1 -right-1 px-1.5 py-0.2 bg-rose-500 text-white text-[8px] font-extrabold rounded-full ring-2 ring-base-100 animate-pulse"
@@ -213,76 +213,11 @@ const allServiceCategories = [
             </div>
         </div>
 
-        <!-- 3. Modal Dialog Semua Layanan RSMD -->
-        <dialog class="modal" :class="{ 'modal-open': showAllModal }">
-            <div class="modal-box rounded-3xl border border-base-300 max-w-md p-5 max-h-[90vh] overflow-y-auto space-y-5">
-
-                <!-- Modal Top Header -->
-                <div class="flex items-center justify-between border-b border-base-200 pb-3">
-                    <div>
-                        <h3 class="font-black text-sm text-base-content">Semua Layanan ePasien</h3>
-                        <p class="text-[10px] text-base-content/50">Direktori modul & portal kesehatan RSMD</p>
-                    </div>
-                    <button @click="showAllModal = false" class="btn btn-sm btn-circle btn-ghost text-base-content/60">
-                        ✕
-                    </button>
-                </div>
-
-                <!-- Grouping Layanan per Kategori -->
-                <div class="space-y-4">
-                    <div v-for="(cat, cIdx) in allServiceCategories" :key="cIdx" class="space-y-2">
-                        <span class="text-[10px] font-bold uppercase tracking-wider text-base-content/40 px-1 block">
-                            {{ cat.title }}
-                        </span>
-
-                        <div class="space-y-1.5">
-                            <Link
-                                v-for="item in cat.items"
-                                :key="item.id"
-                                :href="item.href"
-                                @click="showAllModal = false"
-                                class="flex items-center gap-3 p-3 rounded-2xl bg-base-200/50 hover:bg-base-200 border border-base-300/40 active:scale-[0.99] transition-all group"
-                            >
-                                <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" :class="item.color">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" :d="item.icon" />
-                                    </svg>
-                                </div>
-
-                                <div class="min-w-0 flex-1">
-                                    <div class="flex items-center gap-1.5">
-                                        <h4 class="text-xs font-black text-base-content group-hover:text-primary transition-colors">
-                                            {{ item.label }}
-                                        </h4>
-                                        <span
-                                            v-if="item.badge"
-                                            class="badge badge-error text-white text-[8px] font-bold px-1.5 py-0 h-3.5 rounded-md"
-                                        >
-                                            {{ item.badge }}
-                                        </span>
-                                    </div>
-                                    <p class="text-[10px] text-base-content/50 truncate mt-0.5">
-                                        {{ item.desc }}
-                                    </p>
-                                </div>
-
-                                <span class="text-base-content/30 group-hover:text-primary transition-colors text-xs font-bold pr-1">
-                                    →
-                                </span>
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modal-action pt-1">
-                    <button
-                        @click="showAllModal = false"
-                        class="btn btn-sm btn-primary btn-block rounded-xl text-white font-bold"
-                    >
-                        Tutup
-                    </button>
-                </div>
-            </div>
-        </dialog>
+        <!-- Modal Component -->
+        <LayananModal
+            :show="showAllModal"
+            :categories="allServiceCategories"
+            @close="showAllModal = false"
+        />
     </div>
 </template>

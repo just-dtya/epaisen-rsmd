@@ -12,10 +12,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        // Daftarkan middleware Inertia ke grup 'web'
+        // Daftarkan middleware ke grup 'web'
         $middleware->web(append: [
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
+            \App\Http\Middleware\AutoLogoutPatient::class, // <-- Didaftarkan di sini
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

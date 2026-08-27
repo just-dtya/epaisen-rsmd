@@ -35,6 +35,7 @@ class HistoryKunjunganController extends Controller
                     // 8. Join Instalasi
                     ->leftJoin('instalasi as inst', 'poli.id_instalasi', '=', 'inst.id_instalasi')
                     ->where('p.id_pasien', $idPasien)
+                    ->where('p.sts_batal', 0) // <-- Menampilkan hanya pendaftaran yang tidak dibatalkan
                     ->orderBy('p.tgl_periksa', 'desc')
                     ->orderBy('p.created_at', 'desc')
                     ->select([

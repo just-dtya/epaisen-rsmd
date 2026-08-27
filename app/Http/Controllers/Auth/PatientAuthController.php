@@ -92,7 +92,7 @@ class PatientAuthController extends Controller
                     $localUser = User::updateOrCreate(
                         ['no_rkm_medis' => $simrsPatient->no_rm_pasien],
                         [
-                            'id_pasien_simrs' => $simrsPatient->id_pasien, // Primary Key SIMRS (contoh: 17497306580ZNOo)
+                            'id_pasien_simrs' => $simrsPatient->id_pasien,
                             'no_ktp'          => $simrsPatient->nik_pasien ?? $rawIdentitas,
                             'name'            => $simrsPatient->nama_pasien ?? 'Pasien',
                             'jk'              => $simrsPatient->id_jns_kelamin ?? null,
@@ -107,9 +107,12 @@ class PatientAuthController extends Controller
                 }
             }
 
-            // 3. Login Sesi Laravel
-            Auth::login($localUser, true);
+            // 3. Login Sesi Laravel (Set parameter 'remember' ke FALSE)
+            Auth::login($localUser, false);
             $request->session()->regenerate();
+
+            // Catat waktu awal aktivitas untuk middleware AutoLogoutPatient
+            $request->session()->put('last_activity_time', time());
 
             return redirect()->route('dashboard');
 
@@ -160,22 +163,28 @@ class PatientAuthController extends Controller
             }
 
             // Simpan pasien baru ke DB Lokal
-            $newUser = User::create([
-                'id_pasien_simrs' => null,
-                'no_rkm_medis'    => null,
-                'no_ktp'          => $validated['no_ktp'],
-                'name'            => $validated['name'],
-                'jk'              => $validated['jk'],
-                'tmp_lahir'       => $validated['tmp_lahir'],
-                'tgl_lahir'       => $validated['tgl_lahir'],
-                'nm_ibu'          => $validated['nm_ibu'],
-                'no_tlp'          => $validated['no_tlp'],
-                'alamat'          => $validated['alamat'],
-                'email'           => $validated['no_ktp'] . '@epasien.local',
-            ]);
+            $newUser = DB::transaction(function () use ($validated) {
+                return User::create([
+                    'id_pasien_simrs' => null,
+                    'no_rkm_medis'    => null,
+                    'no_ktp'          => $validated['no_ktp'],
+                    'name'            => $validated['name'],
+                    'jk'              => $validated['jk'],
+                    'tmp_lahir'       => $validated['tmp_lahir'],
+                    'tgl_lahir'       => $validated['tgl_lahir'],
+                    'nm_ibu'          => $validated['nm_ibu'],
+                    'no_tlp'          => $validated['no_tlp'],
+                    'alamat'          => $validated['alamat'],
+                    'email'           => $validated['no_ktp'] . '@epasien.local',
+                ]);
+            });
 
-            Auth::login($newUser, true);
+            // Login Sesi Laravel (Set parameter 'remember' ke FALSE)
+            Auth::login($newUser, false);
             $request->session()->regenerate();
+
+            // Catat waktu awal aktivitas untuk middleware AutoLogoutPatient
+            $request->session()->put('last_activity_time', time());
 
             return redirect()->route('dashboard');
 
