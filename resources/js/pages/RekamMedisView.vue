@@ -3,14 +3,14 @@ import { computed } from 'vue'
 import { Head, Link } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
 
-// Import Sub-Components
-import TtvSection from '@/Components/RekamMedis/TtvSection.vue'
-import SubjectiveSection from '@/Components/RekamMedis/SubjectiveSection.vue'
-import ObjectiveSection from '@/Components/RekamMedis/ObjectiveSection.vue'
-import LabSection from '@/Components/RekamMedis/LabSection.vue'
-import RadiologiSection from '@/Components/RekamMedis/RadiologiSection.vue'
-import AssessmentSection from '@/Components/RekamMedis/AssessmentSection.vue'
-import PlanningSection from '@/Components/RekamMedis/PlanningSection.vue'
+// Import Sub-Components (Path disesuaikan menggunakan 'components' huruf kecil)
+import TtvSection from '@/components/RekamMedis/TtvSection.vue'
+import SubjectiveSection from '@/components/RekamMedis/SubjectiveSection.vue'
+import ObjectiveSection from '@/components/RekamMedis/ObjectiveSection.vue'
+import LabSection from '@/components/RekamMedis/LabSection.vue'
+import RadiologiSection from '@/components/RekamMedis/RadiologiSection.vue'
+import AssessmentSection from '@/components/RekamMedis/AssessmentSection.vue'
+import PlanningSection from '@/components/RekamMedis/PlanningSection.vue'
 
 const props = defineProps({
   id_pendaftaran: String,
