@@ -81,10 +81,12 @@ const filteredRiwayat = computed(() => {
 
       <!-- List Riwayat Kunjungan Cards -->
       <div v-else class="space-y-3">
-        <div
+        <!-- UBAH DISINI: Ganti <div> menjadi <Link> -->
+        <Link
           v-for="(item, idx) in filteredRiwayat"
           :key="item.id_pendaftaran || idx"
-          class="card bg-base-100 border border-base-300 shadow-2xs rounded-3xl p-4 space-y-3"
+          :href="`/rekam-medis/${item.id_pendaftaran}`"
+          class="block card bg-base-100 border border-base-300 shadow-2xs rounded-3xl p-4 space-y-3 hover:border-primary hover:shadow-md transition-all cursor-pointer group"
         >
           <!-- 1. Header Kunjungan (Poli & Status Periksa) -->
           <div class="flex items-start justify-between gap-2">
@@ -123,10 +125,16 @@ const filteredRiwayat = computed(() => {
               👨‍⚕️
             </div>
             <div class="min-w-0 flex-1">
-              <h4 class="text-xs font-bold text-base-content truncate">{{ item.nama_dokter }}</h4>
+              <h4 class="text-xs font-bold text-base-content truncate group-hover:text-primary transition-colors">{{ item.nama_dokter }}</h4>
               <p class="text-[10px] text-base-content/60 font-medium">
                 {{ item.nama_hari ? item.nama_hari + ', ' : '' }}{{ item.tgl_periksa }} ({{ item.jam_praktik }})
               </p>
+            </div>
+            <!-- Icon Chevron untuk indikasi bisa diklik (Opsional) -->
+            <div class="text-base-content/30 group-hover:text-primary transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+              </svg>
             </div>
           </div>
 
@@ -159,8 +167,7 @@ const filteredRiwayat = computed(() => {
               <span class="font-bold text-base-content">{{ item.periksa_at ? item.periksa_at + ' WIB' : '-' }}</span>
             </div>
           </div>
-
-        </div>
+        </Link>
       </div>
 
     </main>

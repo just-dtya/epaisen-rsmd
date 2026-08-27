@@ -5,6 +5,7 @@ use App\Http\Controllers\BedMonitoringController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\HistoryKunjunganController;
 use App\Http\Controllers\JadwalDokterController;
+use App\Http\Controllers\RekamMedisController;
 use App\Http\Controllers\TarifPelayananController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,16 +28,16 @@ Route::middleware('auth')->group(function () {
 
         return Inertia::render('HomeDashboard', [
             'patient' => $user ? [
-                'id'           => $user->id,
+                'id' => $user->id,
                 'no_rkm_medis' => $user->no_rkm_medis ?? null,
-                'nik'          => $user->no_ktp ?? null,
-                'nama'         => $user->name,
-                'jk'           => $user->jk ?? 'L',
-                'tmp_lahir'    => $user->tmp_lahir ?? '-',
-                'tgl_lahir'    => $user->tgl_lahir ? date('d-m-Y', strtotime($user->tgl_lahir)) : '-',
-                'no_tlp'       => $user->no_tlp ?? '-',
-                'alamat'       => $user->alamat ?? '-',
-                'nm_ibu'       => $user->nm_ibu ?? '-',
+                'nik' => $user->no_ktp ?? null,
+                'nama' => $user->name,
+                'jk' => $user->jk ?? 'L',
+                'tmp_lahir' => $user->tmp_lahir ?? '-',
+                'tgl_lahir' => $user->tgl_lahir ? date('d-m-Y', strtotime($user->tgl_lahir)) : '-',
+                'no_tlp' => $user->no_tlp ?? '-',
+                'alamat' => $user->alamat ?? '-',
+                'nm_ibu' => $user->nm_ibu ?? '-',
             ] : null,
             // Mengambil 5 berita terbaru dari cache untuk widget beranda
             'berita' => array_slice(BeritaController::getCachedPosts(), 0, 5),
@@ -48,6 +49,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/bed-monitoring', [BedMonitoringController::class, 'index'])->name('bed.monitoring');
     Route::get('/berita', [BeritaController::class, 'index'])->name('berita.index');
 
+    // routes/web.php
+
+    Route::get('/rekam-medis/{id_pendaftaran}', [RekamMedisController::class, 'show'])
+        ->where('id_pendaftaran', '.*') // Mendukung ID dengan format acak/karakter khusus
+        ->name('rekam-medis.show');
     // Direct via Controller (Inertia Props)
     Route::get('/jadwal-dokter', [JadwalDokterController::class, 'index'])->name('jadwal.dokter');
 

@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'erm' => [
+        'base_url' => env('ERM_API_BASE_URL'),
+        'client_id' => env('ERM_CLIENT_ID'),
+        'api_token' => env('ERM_API_TOKEN'),
+    ],
+
 ];
