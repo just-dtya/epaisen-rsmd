@@ -3,11 +3,12 @@ import { computed } from 'vue'
 import { Head, Link } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
 
-// Import Sub-Components dari @/Components/RekamMedis/
+// Import Sub-Components
 import TtvSection from '@/Components/RekamMedis/TtvSection.vue'
 import SubjectiveSection from '@/Components/RekamMedis/SubjectiveSection.vue'
 import ObjectiveSection from '@/Components/RekamMedis/ObjectiveSection.vue'
-import PenunjangSection from '@/Components/RekamMedis/PenunjangSection.vue'
+import LabSection from '@/Components/RekamMedis/LabSection.vue'
+import RadiologiSection from '@/Components/RekamMedis/RadiologiSection.vue'
 import AssessmentSection from '@/Components/RekamMedis/AssessmentSection.vue'
 import PlanningSection from '@/Components/RekamMedis/PlanningSection.vue'
 
@@ -38,7 +39,7 @@ const hasContent = (val) => {
   return true
 }
 
-// Computed Data Map dengan Dual Key Fallback (camelCase & snake_case)
+// Computed Data Map dengan Dual Key Fallback
 const soap = computed(() => props.rekam_medis?.soap_dokter || props.rekam_medis?.soapDokter || {})
 const perawat = computed(() => props.rekam_medis?.perawat_pemeriksaan || props.rekam_medis?.perawatPemeriksaan || {})
 const ttv = computed(() => props.rekam_medis?.perawat_ttv || props.rekam_medis?.perawatTtv || perawat.value?.pemeriksaanFisik || {})
@@ -111,16 +112,16 @@ const hasilRadiologi = computed(() => {
           :refraksi="refraksi"
         />
 
-        <!-- 4. Section Hasil Laboratorium & Radiologi -->
-        <PenunjangSection
-          :hasilLab="hasilLab"
-          :hasilRadiologi="hasilRadiologi"
-        />
+        <!-- 4. Section Laboratorium Terpisah -->
+        <LabSection :hasilLab="hasilLab" />
 
-        <!-- 5. Section Assessment (Diagnosis) -->
+        <!-- 5. Section Radiologi Terpisah -->
+        <RadiologiSection :hasilRadiologi="hasilRadiologi" />
+
+        <!-- 6. Section Assessment (Diagnosis) -->
         <AssessmentSection :assesmen="soap.assesmen" />
 
-        <!-- 6. Section Planning & Implementasi -->
+        <!-- 7. Section Planning & Implementasi -->
         <PlanningSection :implementasi="screening.implementasiRawat" />
       </div>
 
