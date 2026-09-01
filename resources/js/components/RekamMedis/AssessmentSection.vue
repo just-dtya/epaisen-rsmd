@@ -20,9 +20,13 @@ const hasContent = (val) => {
 
 <template>
   <div v-if="hasContent(assesmen)" class="card bg-base-100 border border-base-300 shadow-2xs rounded-3xl p-4 space-y-3">
+    <!-- Header -->
     <div class="flex items-center gap-2 border-b border-base-200 pb-2.5">
-      <div class="w-7 h-7 rounded-xl bg-emerald-500/10 text-emerald-600 font-bold text-sm flex items-center justify-center">
-        🩺
+      <div class="w-8 h-8 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center shrink-0">
+        <!-- Ikon Stetoskop / Diagnosis -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+        </svg>
       </div>
       <div>
         <h3 class="text-xs font-black text-base-content">Assessment (Diagnosis Dokter)</h3>

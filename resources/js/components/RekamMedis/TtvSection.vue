@@ -21,10 +21,14 @@ const hasContent = (val) => {
 
 <template>
   <div v-if="hasContent(ttv)" class="card bg-base-100 border border-base-300 shadow-2xs rounded-3xl p-4 space-y-3">
+    <!-- Header -->
     <div class="flex items-center justify-between border-b border-base-200 pb-2.5">
       <div class="flex items-center gap-2">
-        <div class="w-7 h-7 rounded-xl bg-rose-500/10 text-rose-500 font-bold text-sm flex items-center justify-center">
-          ❤️
+        <div class="w-8 h-8 rounded-xl bg-rose-500/10 text-rose-500 flex items-center justify-center shrink-0">
+          <!-- Ikon Heart Pulse (TTV) -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg>
         </div>
         <div>
           <h3 class="text-xs font-black text-base-content">Tanda-Tanda Vital (TTV)</h3>
@@ -40,7 +44,7 @@ const hasContent = (val) => {
     <div class="grid grid-cols-3 gap-2">
       <!-- Tekanan Darah -->
       <div v-if="hasContent(ttv.sistolik)" class="col-span-3 sm:col-span-1 bg-rose-500/5 p-3 rounded-2xl border border-rose-500/20 flex flex-col justify-between">
-        <span class="text-[9px] font-bold text-rose-600/70 uppercase">Tekanan Darah</span>
+        <span class="text-[9px] font-bold text-rose-600/70 uppercase tracking-wider">Tekanan Darah</span>
         <div class="mt-1">
           <span class="text-base font-black text-rose-600">{{ ttv.sistolik }}/{{ ttv.diastolik }}</span>
           <span class="text-[9px] text-rose-600/70 ml-1">mmHg</span>
@@ -49,38 +53,44 @@ const hasContent = (val) => {
 
       <!-- Nadi -->
       <div v-if="hasContent(ttv.nadi)" class="bg-base-200/50 p-2.5 rounded-2xl border border-base-200">
-        <span class="text-[9px] font-bold text-base-content/50 uppercase block">Nadi</span>
+        <span class="text-[9px] font-bold text-base-content/50 uppercase tracking-wider block">Nadi</span>
         <span class="text-xs font-black text-base-content mt-0.5 block">{{ ttv.nadi }} <span class="text-[9px] font-normal text-base-content/60">x/m</span></span>
       </div>
 
       <!-- Suhu -->
       <div v-if="hasContent(ttv.suhu)" class="bg-base-200/50 p-2.5 rounded-2xl border border-base-200">
-        <span class="text-[9px] font-bold text-base-content/50 uppercase block">Suhu Body</span>
+        <span class="text-[9px] font-bold text-base-content/50 uppercase tracking-wider block">Suhu Body</span>
         <span class="text-xs font-black text-base-content mt-0.5 block">{{ ttv.suhu }} <span class="text-[9px] font-normal text-base-content/60">°C</span></span>
       </div>
 
       <!-- Napas -->
       <div v-if="hasContent(ttv.napas)" class="bg-base-200/50 p-2.5 rounded-2xl border border-base-200">
-        <span class="text-[9px] font-bold text-base-content/50 uppercase block">Laju Napas</span>
+        <span class="text-[9px] font-bold text-base-content/50 uppercase tracking-wider block">Laju Napas</span>
         <span class="text-xs font-black text-base-content mt-0.5 block">{{ ttv.napas }} <span class="text-[9px] font-normal text-base-content/60">x/m</span></span>
       </div>
 
       <!-- Tinggi & Berat -->
       <div v-if="hasContent(ttv.tb)" class="col-span-2 bg-base-200/50 p-2.5 rounded-2xl border border-base-200 flex justify-between items-center">
         <div>
-          <span class="text-[9px] font-bold text-base-content/50 uppercase block">Tinggi / Berat</span>
+          <span class="text-[9px] font-bold text-base-content/50 uppercase tracking-wider block">Tinggi / Berat</span>
           <span class="text-xs font-black text-base-content mt-0.5 block">{{ ttv.tb }} cm / {{ ttv.bb }} kg</span>
         </div>
-        <span class="text-lg">⚖️</span>
+        <div class="w-7 h-7 rounded-lg bg-base-300/40 text-base-content/60 flex items-center justify-center shrink-0">
+          <!-- Ikon Scale / Timbangan -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+          </svg>
+        </div>
       </div>
 
       <!-- Saturasi O2 -->
       <div v-if="hasContent(ttv.saturasiOksigen)" class="bg-emerald-500/10 p-2.5 rounded-2xl border border-emerald-500/20">
-        <span class="text-[9px] font-bold text-emerald-700/70 uppercase block">Saturasi O2</span>
+        <span class="text-[9px] font-bold text-emerald-700/70 uppercase tracking-wider block">Saturasi O2</span>
         <span class="text-xs font-black text-emerald-600 mt-0.5 block">{{ ttv.saturasiOksigen }}%</span>
       </div>
     </div>
 
+    <!-- Petugas Anamnesa -->
     <div v-if="hasContent(ttv.petugasAnamnesaNama)" class="text-[9px] text-base-content/40 text-right italic pt-1">
       Petugas: {{ ttv.petugasAnamnesaNama }}
     </div>

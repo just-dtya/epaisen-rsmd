@@ -39,7 +39,6 @@ Route::middleware('auth')->group(function () {
                 'alamat' => $user->alamat ?? '-',
                 'nm_ibu' => $user->nm_ibu ?? '-',
             ] : null,
-            // Mengambil 5 berita terbaru dari cache untuk widget beranda
             'berita' => array_slice(BeritaController::getCachedPosts(), 0, 5),
         ]);
     })->name('dashboard');
@@ -48,14 +47,21 @@ Route::middleware('auth')->group(function () {
     Route::get('/tarif', [TarifPelayananController::class, 'index'])->name('tarif.pelayanan');
     Route::get('/bed-monitoring', [BedMonitoringController::class, 'index'])->name('bed.monitoring');
     Route::get('/berita', [BeritaController::class, 'index'])->name('berita.index');
-
-    // routes/web.php
-
-    Route::get('/rekam-medis/{id_pendaftaran}', [RekamMedisController::class, 'show'])
-        ->where('id_pendaftaran', '.*') // Mendukung ID dengan format acak/karakter khusus
-        ->name('rekam-medis.show');
-    // Direct via Controller (Inertia Props)
     Route::get('/jadwal-dokter', [JadwalDokterController::class, 'index'])->name('jadwal.dokter');
+
+    // Ubah prefix dari 'rekam-medis-pasien' menjadi 'rekam-medis'
+    Route::middleware(['auth'])->prefix('rekam-medis')->controller(RekamMedisController::class)->group(function () {
+        // 1. Rute List / Index (Tanpa Parameter ID)
+        Route::get('/lab', 'indexLab')->name('lab.index');
+        Route::get('/radiologi', 'indexRadiologi')->name('radiologi.index');
+
+        // 2. Rute Detail Spesifik Penunjang
+        Route::get('/lab/{id_pendaftaran}', 'showLab')->name('lab.show');
+        Route::get('/radiologi/{id_pendaftaran}', 'showRadiologi')->name('radiologi.show');
+
+        // 3. Rute Dinamis SOAP Utama (WAJIB DITARUH PALING BAWAH)
+        Route::get('/{id_pendaftaran}', 'show')->name('rekam-medis.show');
+    });
 
     Route::get('/rsmd', function () {
         return Inertia::render('LiatRSMDView');

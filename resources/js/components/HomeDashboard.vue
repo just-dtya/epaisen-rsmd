@@ -12,7 +12,7 @@ const props = defineProps({
 
 const page = usePage()
 
-// Ambil user dari props parent atau langsung dari Inertia Shared State (HandleInertiaRequests)
+// Ambil user dari props parent atau dari Inertia Shared State
 const currentUser = computed(() => {
   return props.user || page.props.auth?.patient || page.props.auth?.user || null
 })
@@ -42,7 +42,7 @@ const formattedDate = computed(() => {
   }).format(new Date())
 })
 
-// Menu dengan rute URL Laravel Inertia
+// Menu Quick Access (diubah menjadi 8 item agar simetris dalam Grid 4 Kolom)
 const quickMenus = [
   {
     id: 'daftar',
@@ -55,28 +55,49 @@ const quickMenus = [
     id: 'antrean',
     label: 'Antrean Poli',
     href: '/antrean',
-    bg: 'bg-primary/10 text-primary',
+    bg: 'bg-emerald-500/10 text-emerald-600',
     icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'
+  },
+  {
+    id: 'riwayat',
+    label: 'Riwayat RM',
+    href: '/riwayat',
+    bg: 'bg-indigo-500/10 text-indigo-600',
+    icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2'
+  },
+  {
+    id: 'lab',
+    label: 'Hasil Lab',
+    href: '/riwayat', // Diarahkan ke riwayat untuk memilih id_pendaftaran
+    bg: 'bg-purple-500/10 text-purple-600',
+    icon: 'M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'
+  },
+  {
+    id: 'radiologi',
+    label: 'Radiologi',
+    href: '/riwayat', // Diarahkan ke riwayat untuk memilih id_pendaftaran
+    bg: 'bg-blue-500/10 text-blue-600',
+    icon: 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'
   },
   {
     id: 'jadwal',
     label: 'Jadwal Dokter',
     href: '/jadwal-dokter',
-    bg: 'bg-primary/10 text-primary',
+    bg: 'bg-teal-500/10 text-teal-600',
     icon: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'
   },
   {
     id: 'farmasi',
-    label: 'Farmasi & Obat',
+    label: 'Farmasi',
     href: '/farmasi',
-    bg: 'bg-primary/10 text-primary',
-    icon: 'M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'
+    bg: 'bg-amber-500/10 text-amber-600',
+    icon: 'M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10'
   },
   {
     id: 'liat_rsmd',
     label: 'LiatRSMD',
     href: '/rsmd',
-    bg: 'bg-primary/10 text-primary',
+    bg: 'bg-rose-500/10 text-rose-500',
     icon: 'M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z'
   }
 ]
@@ -151,13 +172,13 @@ const quickMenus = [
       </div>
     </div>
 
-    <!-- 2. Quick Menus (Inertia Link) -->
+    <!-- 2. Quick Menus Grid (8 Item Simetris: 2 Baris x 4 Kolom) -->
     <div class="grid grid-cols-4 gap-2">
       <Link
         v-for="(menu, idx) in quickMenus"
         :key="idx"
         :href="menu.href"
-        class="flex flex-col items-center justify-center p-3 bg-base-100 rounded-2xl border border-base-300 shadow-sm active:scale-95 transition-all duration-150 group"
+        class="flex flex-col items-center justify-center p-3 bg-base-100 rounded-2xl border border-base-300 shadow-xs active:scale-95 transition-all duration-150 group"
       >
         <div
           class="w-10 h-10 rounded-xl flex items-center justify-center mb-1.5 transition-transform group-hover:scale-105"

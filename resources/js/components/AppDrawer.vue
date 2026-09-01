@@ -113,6 +113,18 @@ const menuSections = [
                 icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2'
             },
             {
+                id: 'lab',
+                label: 'Hasil Laboratorium',
+                href: '/rekam-medis/lab',
+                icon: 'M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'
+            },
+            {
+                id: 'radiologi',
+                label: 'Riwayat Radiologi',
+                href: '/rekam-medis/radiologi',
+                icon: 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'
+            },
+            {
                 id: 'liat_rsmd',
                 label: 'LiatRSMD (CCTV & Antrean)',
                 href: '/rsmd',
@@ -165,7 +177,7 @@ const menuSections = [
 ]
 
 const isRouteActive = (href) => {
-    return page.url === href || page.url.startsWith(href + '?')
+    return page.url === href || page.url.startsWith(href + '/') || page.url.startsWith(href + '?')
 }
 </script>
 
@@ -204,7 +216,9 @@ const isRouteActive = (href) => {
 
                             <button @click="$emit('close')" class="btn btn-sm btn-circle btn-ghost text-base-content/60"
                                 aria-label="Tutup Menu">
-                                ✕
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
                             </button>
                         </div>
 
@@ -275,7 +289,7 @@ const isRouteActive = (href) => {
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                             </svg>
-                            <span>Keluar dari Akun</span>
+                            <span>Keluar</span>
                         </button>
                         <p class="text-center text-[10px] text-base-content/40 font-medium">
                             ← Geser ke kiri untuk menutup

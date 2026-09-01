@@ -11,6 +11,7 @@ registerSW({ immediate: true });
 
 createInertiaApp({
     title: (title) => `${title} - ePasien`,
+    // PERBAIKAN: Ubah './pages/' menjadi './Pages/' (Huruf P KAPITAL)
     resolve: (name) => resolvePageComponent(`./pages/${name}.vue`, import.meta.glob('./pages/**/*.vue')),
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })
